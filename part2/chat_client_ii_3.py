@@ -1,6 +1,7 @@
 import socket
 import sys
 import asyncio
+import aioconsole
 
 # On définit la destination de la connexion
 host = '10.33.49.148'  # IP du serveur
@@ -13,8 +14,18 @@ s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 
 
+async def receive(reader,writer):
+    while True:
+        data = await reader.read(1024)
+        print(data.decode())
 
 
+async def input(reader,writer):
+    while True:
+        clientmessage = await aioconsole.ainput()
+        msg = clientmessage.encode("utf-8")
+        writer.write(msg)
+        await writer.drain()
 
 async def main():
     try :
@@ -26,13 +37,8 @@ async def main():
     # note : la double parenthèse n'est pas une erreur : on envoie un tuple à la fonction connect()
 
     print(f"Connecté avec succès au serveur {host} sur le port {port}")
-    # Envoi de data bidon
 
-    clientmessage =input("Que veux-tu envoyer au serveur : ")
-
-    msg = clientmessage.encode("utf-8")
-    writer.write(msg)
-    await writer.drain()
+    
 
 
 
@@ -41,11 +47,10 @@ async def main():
     if not data :
         sys.exit(1)
     # On libère le socket TCP
-    s.close()
 
     # Affichage de la réponse reçue du serveur
     print(data.decode())
-
-    sys.exit(0)
+    tasks = [receive() , input()]
+    await asyncio.gather(*tasks)
 
 asyncio.run(main())
