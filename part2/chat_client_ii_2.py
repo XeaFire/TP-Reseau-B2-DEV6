@@ -10,7 +10,7 @@ s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 # Connexion au serveur
 
-clientmessage =input("Que veux-tu envoyer au serveur : ")
+
 
 
 try :
@@ -23,6 +23,8 @@ except socket.error as msg:
 
 print(f"Connecté avec succès au serveur {host} sur le port {port}")
 # Envoi de data bidon
+
+clientmessage =input("Que veux-tu envoyer au serveur : ")
 s.sendall(clientmessage.encode(encoding="utf-8"))
 
 
