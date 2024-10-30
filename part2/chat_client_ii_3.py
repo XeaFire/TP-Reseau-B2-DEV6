@@ -22,6 +22,7 @@ async def receive(reader,writer):
 
 async def input(reader,writer):
     while True:
+        print("Que veux tu envoyer au serveur ? ")
         clientmessage = await aioconsole.ainput()
         msg = clientmessage.encode("utf-8")
         writer.write(msg)
@@ -38,19 +39,9 @@ async def main():
 
     print(f"Connecté avec succès au serveur {host} sur le port {port}")
 
-    
-
-
-
-    # On reçoit 1024 bytes qui contiennent peut-être une réponse du serveur
-    data = await reader.read(1024)
-    if not data :
-        sys.exit(1)
-    # On libère le socket TCP
-
-    # Affichage de la réponse reçue du serveur
-    print(data.decode())
-    tasks = [receive() , input()]
+    # Gestion des Tasks héhé pouet pouet je suis un clown
+    tasks = [receive(reader,writer) , input(reader,writer)]
     await asyncio.gather(*tasks)
+    
 
 asyncio.run(main())

@@ -15,7 +15,7 @@ async def handle_packet(reader, writer):
     servermessage = f"Hello {addr[0]}:{addr[1]}".encode("utf-8")
     writer.write(servermessage)
     await writer.drain()
-
+    
 
     # Je laisse ça là ça peut toujours me servir
 
