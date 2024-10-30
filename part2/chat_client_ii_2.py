@@ -35,7 +35,7 @@ if not data :
 s.close()
 
 # Affichage de la réponse reçue du serveur
-print(data)
+print(data.decode("utf-8"))
 
 sys.exit(0)
 
