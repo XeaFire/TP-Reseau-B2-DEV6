@@ -1,5 +1,7 @@
 import asyncio
 
+host = '10.33.49.148'
+port = 14447
 
 
 async def handle_packet(reader, writer):
@@ -14,15 +16,18 @@ async def handle_packet(reader, writer):
     writer.write(servermessage)
     await writer.drain()
 
-    print("Close the connection")
-    writer.close()
-    await writer.wait_closed()
+
+    # Je laisse ça là ça peut toujours me servir
+
+    # print("Close the connection")
+    # writer.close()
+    # await writer.wait_closed()
     return
 
 
 
 async def main():
-    server = await asyncio.start_server(handle_packet, '10.33.49.148', 14447)
+    server = await asyncio.start_server(handle_packet, host, port)
 
     addr = server.sockets[0].getsockname()
     print(f"Serveur en écoute sur {addr}")
