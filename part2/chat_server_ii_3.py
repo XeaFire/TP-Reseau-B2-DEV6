@@ -5,21 +5,19 @@ port = 14447
 
 
 async def handle_packet(reader, writer):
-    servermessage = f"Hello {addr[0]}:{addr[1]}".encode("utf-8")
-    writer.write(servermessage)
-    await writer.drain()
-    
-    data = await reader.read(100)
-    message = data.decode()
     addr = writer.get_extra_info('peername')
-
-    print(f"Received {message!r} from {addr!r}")
-
-    print(f"Send: {message!r}")
     servermessage = f"Hello {addr[0]}:{addr[1]}".encode("utf-8")
     writer.write(servermessage)
     await writer.drain()
     
+
+    while True:
+        data = await reader.read(100)
+        message = data.decode()
+        if not data:
+            await asyncio.sleep(0.05)
+        print(f"Message received from {addr[0]!r}:{addr[1]!r} :{message!r}")
+        
 
     # Je laisse ça là ça peut toujours me servir
 
