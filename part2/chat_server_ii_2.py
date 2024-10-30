@@ -10,7 +10,8 @@ async def handle_packet(reader, writer):
     print(f"Received {message!r} from {addr!r}")
 
     print(f"Send: {message!r}")
-    writer.write(data)
+    servermessage = f"Hello : {addr}".encode("utf-8")
+    writer.write(servermessage)
     await writer.drain()
 
     print("Close the connection")
