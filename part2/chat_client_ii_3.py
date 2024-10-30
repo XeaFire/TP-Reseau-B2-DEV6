@@ -29,19 +29,22 @@ async def main():
     # Envoi de data bidon
 
     clientmessage =input("Que veux-tu envoyer au serveur : ")
-    s.sendall(clientmessage.encode(encoding="utf-8"))
+
+    msg = clientmessage.encode("utf-8")
+    writer.write(msg)
+    await writer.drain()
 
 
 
     # On reçoit 1024 bytes qui contiennent peut-être une réponse du serveur
-    data = s.recv(1024)
+    data = await reader.read(1024)
     if not data :
         sys.exit(1)
     # On libère le socket TCP
     s.close()
 
     # Affichage de la réponse reçue du serveur
-    print(data.decode("utf-8"))
+    print(data.decode())
 
     sys.exit(0)
 
