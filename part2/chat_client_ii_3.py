@@ -16,8 +16,12 @@ s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 async def receive(reader,writer):
     while True:
-        data = await reader.read(1024)
-        print(data.decode())
+        while True:
+            data = await reader.read(1024)
+            if data:
+                print(data.decode())
+            else:
+                await asyncio.sleep(0.05)
 
 
 async def input(reader,writer):

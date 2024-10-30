@@ -5,6 +5,11 @@ port = 14447
 
 
 async def handle_packet(reader, writer):
+    print(f"Send: {message!r}")
+    servermessage = f"Hello {addr[0]}:{addr[1]}".encode("utf-8")
+    writer.write(servermessage)
+    await writer.drain()
+    
     data = await reader.read(100)
     message = data.decode()
     addr = writer.get_extra_info('peername')
