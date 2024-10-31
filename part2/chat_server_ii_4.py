@@ -3,9 +3,19 @@ import asyncio
 host = '5.5.5.1'
 port = 14447
 
+global CLIENTS
+CLIENTS = {}
+
+async def sendAll():
+    for addr, client in CLIENTS.items:
+        print(client[addr])
+    return
 
 async def handle_packet(reader, writer):
     addr = writer.get_extra_info('peername')
+    CLIENTS[addr] = {}
+    CLIENTS[addr]["r"] = reader
+    CLIENTS[addr]["w"] = writer
     servermessage = f"Hello {addr[0]}:{addr[1]}".encode("utf-8")
     writer.write(servermessage)
     await writer.drain()
@@ -16,7 +26,9 @@ async def handle_packet(reader, writer):
         if not data:
             await asyncio.sleep(0.05)
         print(f"Message received from {addr[0]!r}:{addr[1]!r} :{message!r}")
-        print(data)
+        servermessage = f"{addr[0]}:{addr[1]} : {message}".encode("utf-8")
+        writer.write(servermessage)
+        await writer.drain()
         if data == b'': # Gestion de la déco relou le loup
             print("Close the connection")
             writer.close()
@@ -25,9 +37,6 @@ async def handle_packet(reader, writer):
 
     # Je laisse ça là ça peut toujours me servir
    
-    
-    
-
 
 async def main():
     server = await asyncio.start_server(handle_packet, host, port)
