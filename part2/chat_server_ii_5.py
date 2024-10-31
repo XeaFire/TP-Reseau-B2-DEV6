@@ -19,6 +19,7 @@ async def handle_packet(reader, writer):
     CLIENTS[addr] = {}
     CLIENTS[addr]["r"] = reader
     CLIENTS[addr]["w"] = writer
+    CLIENTS[addr]["username"] = ''
     servermessage = f"Hello {addr[0]}:{addr[1]}".encode("utf-8")
     writer.write(servermessage)
     await writer.drain()
