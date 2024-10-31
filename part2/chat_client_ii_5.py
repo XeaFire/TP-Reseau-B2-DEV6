@@ -48,6 +48,7 @@ async def main():
     while True:
         print("Veuillez choisir un pseudo:")
         username = input()
+        print(username)
         if re.match(username, r'^[a-z0-9_-]{3,15}$'):
             break
         else:
