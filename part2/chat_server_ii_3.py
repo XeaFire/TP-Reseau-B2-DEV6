@@ -1,6 +1,6 @@
 import asyncio
 
-host = '10.33.49.148'
+host = '5.5.5.1'
 port = 14447
 
 
@@ -20,7 +20,6 @@ async def handle_packet(reader, writer):
         
 
     # Je laisse ça là ça peut toujours me servir
-
     # print("Close the connection")
     # writer.close()
     # await writer.wait_closed()

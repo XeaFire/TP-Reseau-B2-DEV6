@@ -1,6 +1,6 @@
 import asyncio
 
-host = '10.33.49.148'
+host = '5.5.5.1'
 port = 14447
 
 
