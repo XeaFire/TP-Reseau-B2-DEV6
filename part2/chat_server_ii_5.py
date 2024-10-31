@@ -33,7 +33,7 @@ async def handle_packet(reader, writer):
         print(f"Message received from {addr[0]!r}:{addr[1]!r} :{message!r}")
         
         if CLIENTS[addr]["username"] == '':
-            if re.match(username, r'^[a-z0-9_-]{3,15}$'):
+            if re.match(r'^[a-z0-9_-]{3,15}$', message):
                 CLIENTS[addr]["username"] = message
         else:
             await sendAll(message, addr)

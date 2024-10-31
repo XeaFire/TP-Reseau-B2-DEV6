@@ -49,7 +49,7 @@ async def main():
         print("Veuillez choisir un pseudo:")
         username = input()
         print(username)
-        if re.match(username, r'^[a-z0-9_-]{3,15}$'):
+        if re.match(r'^[a-z0-9_-]{3,15}$', username):
             break
         else:
             print("Pseudo invalide veuillez choisir un pseudo de 3 à 16 characteres") 
