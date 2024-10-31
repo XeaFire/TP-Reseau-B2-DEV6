@@ -2,6 +2,7 @@ import socket
 import sys
 import asyncio
 import aioconsole
+import re
 
 # On définit la destination de la connexion
 host = '5.5.5.1'  # IP du serveur
@@ -42,6 +43,17 @@ async def main():
     # note : la double parenthèse n'est pas une erreur : on envoie un tuple à la fonction connect()
 
     print(f"Connecté avec succès au serveur {host} sur le port {port}")
+
+    
+    while True:
+        username = input()
+        if re.match(username, r'^[a-zA-Z0-9_]{3,16}$'):
+            break
+        else: continue
+    
+    msg = username.encode("utf-8")
+    writer.write(msg)
+    await writer.drain()
 
     # Gestion des Tasks héhé pouet pouet je suis un clown
     tasks = [receive(reader,writer) , clientinput(reader,writer)]

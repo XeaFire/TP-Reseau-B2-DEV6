@@ -9,7 +9,7 @@ CLIENTS = {}
 async def sendAll(message, writeradrr):
     for addr in CLIENTS:
         writer = CLIENTS[addr]["w"]
-        servermessage = f"{writeradrr[0]}:{writeradrr[1]} : {message}".encode("utf-8")
+        servermessage = f"{CLIENTS[addr]["username"]} : {message}".encode("utf-8")
         writer.write(servermessage)
         print("message send")
     return
@@ -29,7 +29,10 @@ async def handle_packet(reader, writer):
         if not data:
             await asyncio.sleep(0.05)
         print(f"Message received from {addr[0]!r}:{addr[1]!r} :{message!r}")
-        await sendAll(message, addr)
+        if CLIENTS[addr]["username"] == '':
+            CLIENTS[addr]["username"] = message.decode("utf-8")
+        else:
+            await sendAll(message, addr)
        
         await writer.drain()
         if data == b'': # Gestion de la déco relou le loup
