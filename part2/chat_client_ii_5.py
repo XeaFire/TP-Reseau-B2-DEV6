@@ -48,12 +48,11 @@ async def main():
     while True:
         print("Veuillez choisir un pseudo:")
         username = input()
-        break
-        # if re.match(username, r'^[a-zA-Z0-9_]{3,16}$'):
-        #     break
-        # else:
-        #     print("Pseudo invalide veuillez choisir un pseudo de 3 à 16 characteres") 
-        #     continue
+        if re.match(username, r'^[a-z0-9_-]{3,15}$'):
+            break
+        else:
+            print("Pseudo invalide veuillez choisir un pseudo de 3 à 16 characteres") 
+            continue
     
     msg = username.encode("utf-8")
     writer.write(msg)
